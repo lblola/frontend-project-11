@@ -58,10 +58,10 @@ const renderPosts = (posts) => {
 
   posts.forEach((post) => {
     const item = document.createElement('li')
-    item.dataset.seen = String(post.seen)
     item.className = 'flex items-center justify-between gap-4 border-b border-slate-200 p-5 last:border-b-0'
 
     const link = document.createElement('a')
+    link.dataset.seen = String(post.seen)
     link.className = post.seen
       ? 'text-lg font-normal text-slate-500'
       : 'text-lg font-bold text-blue-600 hover:text-blue-800'
