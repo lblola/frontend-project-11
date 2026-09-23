@@ -58,16 +58,25 @@ const renderPosts = (posts) => {
 
   posts.forEach((post) => {
     const item = document.createElement('li')
-    item.className = 'border-b border-slate-200 p-5 last:border-b-0'
+    item.dataset.seen = String(post.seen)
+    item.className = 'flex items-center justify-between gap-4 border-b border-slate-200 p-5 last:border-b-0'
 
     const link = document.createElement('a')
-    link.className = 'text-lg font-medium text-blue-600 hover:text-blue-800'
+    link.className = post.seen
+      ? 'text-lg font-normal text-slate-500'
+      : 'text-lg font-bold text-blue-600 hover:text-blue-800'
     link.href = post.link
     link.target = '_blank'
     link.rel = 'noreferrer'
     link.textContent = post.title
 
-    item.append(link)
+    const previewButton = document.createElement('button')
+    previewButton.className = 'shrink-0 rounded-md border border-blue-500 px-4 py-2 text-blue-600 hover:bg-blue-50'
+    previewButton.dataset.postId = post.id
+    previewButton.type = 'button'
+    previewButton.textContent = i18next.t('modal.preview')
+
+    item.append(link, previewButton)
     container.append(item)
   })
 }
@@ -116,6 +125,39 @@ export const render = () => {
           <div id="feeds"></div>
         </section>
       </main>
+
+      <dialog class="fixed left-6 top-5 m-0 w-[calc(100%-3rem)] max-w-xl rounded-lg p-0 shadow-xl backdrop:bg-slate-950/70" id="post-modal">
+        <div class="bg-white text-slate-900">
+          <div class="flex items-center justify-between border-b-2 border-slate-700 p-5">
+            <h3 class="text-2xl font-bold" id="modal-title"></h3>
+            <button
+              class="text-3xl leading-none text-slate-500 hover:text-slate-800"
+              aria-label="${i18next.t('modal.close')}"
+              data-close-modal
+              type="button"
+            >
+              ×
+            </button>
+          </div>
+          <div class="p-5 text-lg text-slate-700" data-test="modal-body">
+            <p id="modal-description"></p>
+          </div>
+          <div class="flex justify-end gap-3 border-t-2 border-slate-700 p-5">
+            <a
+              class="rounded-md bg-blue-600 px-5 py-3 font-medium text-white hover:bg-blue-700"
+              id="modal-link"
+              target="_blank"
+              rel="noreferrer"
+              href="#"
+            >
+              ${i18next.t('modal.read')}
+            </a>
+            <button class="rounded-md bg-slate-500 px-5 py-3 font-medium text-white hover:bg-slate-600" data-close-modal type="button">
+              ${i18next.t('modal.close')}
+            </button>
+          </div>
+        </div>
+      </dialog>
     </div>
   `
 }

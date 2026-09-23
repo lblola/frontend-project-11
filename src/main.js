@@ -15,6 +15,7 @@ const addNewPosts = (feedId, posts) => {
       ...post,
       id: getPostId(feedId, post),
       feedId,
+      seen: false,
     }))
     .filter((post) => !state.posts.some((currentPost) => currentPost.id === post.id))
 
@@ -50,6 +51,36 @@ initI18n().then(() => {
 
   const form = document.querySelector('form')
   const input = document.querySelector('#feed-url')
+  const posts = document.querySelector('#posts')
+  const modal = document.querySelector('#post-modal')
+  const modalTitle = document.querySelector('#modal-title')
+  const modalDescription = document.querySelector('#modal-description')
+  const modalLink = document.querySelector('#modal-link')
+  const closeModalButtons = document.querySelectorAll('[data-close-modal]')
+
+  posts.addEventListener('click', (event) => {
+    const previewButton = event.target.closest('[data-post-id]')
+
+    if (!previewButton) {
+      return
+    }
+
+    const post = state.posts.find(({ id }) => id === previewButton.dataset.postId)
+
+    if (!post) {
+      return
+    }
+
+    post.seen = true
+    modalTitle.textContent = post.title
+    modalDescription.textContent = post.description
+    modalLink.href = post.link
+    modal.showModal()
+  })
+
+  closeModalButtons.forEach((button) => {
+    button.addEventListener('click', () => modal.close())
+  })
 
   form.addEventListener('submit', (event) => {
     event.preventDefault()
