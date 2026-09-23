@@ -132,7 +132,7 @@ export const render = () => {
             <h3 class="text-2xl font-bold" id="modal-title"></h3>
             <button
               class="text-3xl leading-none text-slate-500 hover:text-slate-800"
-              aria-label="${i18next.t('modal.close')}"
+              aria-label="X"
               data-close-modal
               type="button"
             >
