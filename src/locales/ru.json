@@ -2,16 +2,26 @@
   "translation": {
     "title": "RSS агрегатор",
     "description": "Начните читать RSS сегодня! Это легко, это красиво.",
+    "sections": {
+      "feeds": "Фиды",
+      "posts": "Посты"
+    },
     "form": {
       "label": "Ссылка RSS",
       "placeholder": "ссылка RSS",
       "submit": "Добавить",
       "example": "Пример: https://lorem-rss.hexlet.app/feed"
     },
+    "messages": {
+      "loading": "Загрузка RSS...",
+      "success": "RSS успешно загружен"
+    },
     "errors": {
       "required": "Не должно быть пустым",
       "url": "Ссылка должна быть валидным URL",
-      "duplicate": "RSS уже существует"
+      "duplicate": "RSS уже существует",
+      "network": "Ошибка сети",
+      "parse": "Ресурс не содержит валидный RSS"
     }
   }
 }

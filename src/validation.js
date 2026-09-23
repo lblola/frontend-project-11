@@ -12,7 +12,7 @@ yup.setLocale({
 const urlSchema = yup.string().trim().required().url()
 
 export const validateFeedUrl = (url, feeds) => urlSchema.validate(url).then((validUrl) => {
-  if (feeds.includes(validUrl)) {
+  if (feeds.some((feed) => feed.url === validUrl)) {
     return Promise.reject(new yup.ValidationError('errors.duplicate'))
   }
 
