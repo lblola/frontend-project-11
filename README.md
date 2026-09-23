@@ -1,6 +1,7 @@
 # RSS агрегатор
 
 [![hexlet-check](https://github.com/lblola/frontend-project-11/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/lblola/frontend-project-11/actions)
+[![lint](https://github.com/lblola/frontend-project-11/actions/workflows/lint.yml/badge.svg)](https://github.com/lblola/frontend-project-11/actions/workflows/lint.yml)
 
 После проекта вы сможете уверенно работать с DOM, Vite, Tailwind CSS, AJAX, валидациями и деплоить проект
 
@@ -10,19 +11,43 @@
 ## Стек
 
 - JavaScript
+- Vite
+- Tailwind CSS
 
 ## Установка
-
-<!-- Опишите установку: клонирование, зависимости, переменные окружения -->
 
 ```bash
 git clone https://github.com/lblola/frontend-project-11.git
 cd frontend-project-11
+make install
+```
+
+Если команда `make` недоступна, установите зависимости напрямую:
+
+```bash
+npm ci
 ```
 
 ## Использование
 
-<!-- Добавьте примеры запуска и запись asciinema — именно это смотрит работодатель -->
+Запустите приложение в режиме разработки:
+
+```bash
+npm run dev
+```
+
+Приложение будет доступно по адресу http://localhost:5173.
+
+Проверить код и production-сборку можно командами:
+
+```bash
+npm run lint
+npm run build
+```
+
+## Демо
+
+Ссылка на опубликованное приложение появится после деплоя на Vercel.
 
 ---
 
