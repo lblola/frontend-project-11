@@ -5,14 +5,14 @@ const buildProxyUrl = (url) => `https://allorigins.hexlet.app/get?disableCache=t
 
 export const loadFeed = (url) => axios.get(buildProxyUrl(url))
   .then((response) => {
-    if (!response.data.contents) {
-      throw new Error('errors.parse')
+    if (response.data.status?.error || !response.data.contents) {
+      throw new Error('errors.network')
     }
 
     return parseFeed(response.data.contents)
   })
   .catch((error) => {
-    if (error.message === 'errors.parse') {
+    if (error.message === 'errors.parse' || error.message === 'errors.network') {
       return Promise.reject(error)
     }
 

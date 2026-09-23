@@ -5,6 +5,22 @@ import { loadFeed } from './api.js'
 import { validateFeedUrl } from './validation.js'
 import { render, watchState } from './view.js'
 
+const updateInterval = 5000
+
+const getPostId = (feedId, post) => `${feedId}:${post.link}`
+
+const addNewPosts = (feedId, posts) => {
+  const newPosts = posts
+    .map((post) => ({
+      ...post,
+      id: getPostId(feedId, post),
+      feedId,
+    }))
+    .filter((post) => !state.posts.some((currentPost) => currentPost.id === post.id))
+
+  state.posts.unshift(...newPosts)
+}
+
 const addFeed = (url) => loadFeed(url).then((data) => {
   const feed = {
     id: url,
@@ -12,15 +28,21 @@ const addFeed = (url) => loadFeed(url).then((data) => {
     title: data.title,
     description: data.description,
   }
-  const posts = data.posts.map((post, index) => ({
-    ...post,
-    id: `${url}-${index}`,
-    feedId: url,
-  }))
 
   state.feeds.push(feed)
-  state.posts.push(...posts)
+  addNewPosts(feed.id, data.posts)
+
+  return feed
 })
+
+const checkFeed = (feed) => {
+  loadFeed(feed.url)
+    .then((data) => addNewPosts(feed.id, data.posts))
+    .catch(() => {})
+    .then(() => {
+      setTimeout(() => checkFeed(feed), updateInterval)
+    })
+}
 
 initI18n().then(() => {
   render()
@@ -39,7 +61,8 @@ initI18n().then(() => {
         state.status = 'loading'
         return addFeed(url)
       })
-      .then(() => {
+      .then((feed) => {
+        checkFeed(feed)
         state.status = 'success'
         form.reset()
         input.focus()
