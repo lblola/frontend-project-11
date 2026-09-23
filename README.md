@@ -47,7 +47,6 @@ npm run build
 
 ## Демо
 
-Ссылка на опубликованное приложение появится после деплоя на Vercel.
 
 Приложение: https://frontend-project-11-teal-nine.vercel.app/
 
